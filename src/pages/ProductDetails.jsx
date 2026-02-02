@@ -14,9 +14,9 @@ export default function ProductDetails() {
     return (
         <div className="max-w-xl mx-auto border border-gray-200 shadow rounded p-6 mt-10">
             <h1 className="font-bold text-3xl mb-2">
-                {product.title}
+                {product.name}
             </h1>
-            <p className="text-gray-600"> Product ID: {id}</p>
+            <p className="text-gray-600">{product.description}</p>
 
             <button
                 className="bg-gray-200 px-4 py-2 rounded hover:bg-gray-300 mt-4"
