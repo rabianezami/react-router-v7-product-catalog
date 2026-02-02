@@ -1,4 +1,13 @@
-import Navbar from "./components/Navbar";
+import { useState } from "react";
+import { Route, Routes } from "react-router-dom";
+import Layout from './layout/Layout'
+import ProductList from './components/ProductList'
+import ProductDetails from "./pages/ProductDetails";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./pages/NotFound";
 
 const navLinks = [
     {name: "Home", path: "/"},
@@ -7,7 +16,30 @@ const navLinks = [
 ]
 
 export default function App() {
+   const [isAuth, setIsAuth] = useState(false)
+
+   function onLogin() {
+      setIsAuth(true)
+   }
+
    return (
-    <Navbar links={navLinks}/>
+    <Routes>
+        <Route element={<Layout isAuth={isAuth} links={navLinks}/>}>
+           <Route path="/" element={<Home />} />
+           <Route path="products" element={<ProductList />} />
+           <Route path="products/:id" element={<ProductDetails />} />
+           <Route path="login" element={<Login onLogin={onLogin} />} />
+
+           <Route path="/dashboard" element={
+            <ProtectedRoute isAuth={isAuth}>
+                <Dashboard />
+            </ProtectedRoute>
+           }
+           />
+
+           <Route path="*" element={<NotFound />}/>
+        
+        </Route>
+    </Routes>
    )
 }
